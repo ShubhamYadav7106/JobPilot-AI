@@ -112,7 +112,7 @@ graph TD
 
 ```powershell
 # 1. Clone Repository
-git clone https://github.com/BhairavJShah/JobPilot-AI.git
+git clone https://github.com/ShubhamYadav7106/JobPilot-AI.git
 cd JobPilot-AI
 
 # 2. Create Virtual Environment
@@ -134,7 +134,7 @@ playwright install chromium
 sudo apt update && sudo apt install -y python3 python3-pip python3-venv git
 
 # 2. Clone & Setup
-git clone https://github.com/BhairavJShah/JobPilot-AI.git
+git clone https://github.com/ShubhamYadav7106/JobPilot-AI.git
 cd JobPilot-AI
 python3 -m venv venv
 source venv/bin/activate
@@ -147,7 +147,7 @@ playwright install --with-deps chromium
 #### Fedora / RHEL / CentOS:
 ```bash
 sudo dnf install -y python3 python3-pip git
-git clone https://github.com/BhairavJShah/JobPilot-AI.git
+git clone https://github.com/ShubhamYadav7106/JobPilot-AI.git
 cd JobPilot-AI
 python3 -m venv venv
 source venv/bin/activate
@@ -158,7 +158,7 @@ playwright install --with-deps chromium
 #### Arch Linux / Manjaro:
 ```bash
 sudo pacman -S python python-pip git
-git clone https://github.com/BhairavJShah/JobPilot-AI.git
+git clone https://github.com/ShubhamYadav7106/JobPilot-AI.git
 cd JobPilot-AI
 python3 -m venv venv
 source venv/bin/activate
@@ -172,7 +172,7 @@ playwright install --with-deps chromium
 
 ```bash
 # 1. Clone Repository
-git clone https://github.com/BhairavJShah/JobPilot-AI.git
+git clone https://github.com/ShubhamYadav7106/JobPilot-AI.git
 cd JobPilot-AI
 
 # 2. Create Virtual Environment
@@ -331,16 +331,16 @@ JobPilot-AI/
 │   ├── resume_parser.py   # PyPDF2 resume parser
 │   └── state.py            # Global shared runtime state & thread-safe flags
 ├── ui/                     # CustomTkinter Dark GUI Views
-│   ├── app_window.py       # Main window & sidebar navigation
-│   ├── components.py       # Design system, pill-chips, rounded CTk widgets
-│   ├── dashboard_view.py   # Analytics dashboard & RAG AI assistant chat
-│   ├── history_view.py     # Application history table
-│   ├── suggestions_view.py # Career suggestions & cover letter generator
-│   ├── approvals_view.py   # Human-in-the-loop doubt queue approvals
-│   ├── contacts_view.py    # Recruiter contacts, WhatsApp & SMTP outreach
-│   ├── settings_view.py    # AI provider, search thresholds & safety settings
-│   ├── profile_view.py     # Candidate profile & ATS QA vault setup
-│   └── accounts_view.py    # Platform logins & SMTP credentials setup
+│   ├── app_shell.py        # Main window & sidebar navigation
+│   ├── ui_components.py    # Design system, pill-chips, rounded CTk widgets
+│   ├── dashboard_panel.py  # Analytics dashboard & RAG AI assistant chat
+│   ├── history_panel.py    # Application history table
+│   ├── suggestions_panel.py # Career suggestions & cover letter generator
+│   ├── approvals_panel.py  # Human-in-the-loop doubt queue approvals
+│   ├── contacts_panel.py   # Recruiter contacts, WhatsApp & SMTP outreach
+│   ├── settings_panel.py   # AI provider, search thresholds & safety settings
+│   ├── profile_panel.py    # Candidate profile & ATS QA vault setup
+│   └── accounts_panel.py   # Platform logins & SMTP credentials setup
 ├── gui_app.py              # Application entry point
 ├── run_app.bat             # Windows one-click batch launcher
 ├── config.json             # Local user configuration file (Git-ignored)
