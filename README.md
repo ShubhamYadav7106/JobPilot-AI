@@ -48,77 +48,67 @@ JobPilot-AI is designed for local experimentation and personal workflows. Review
 
 ---
 
-## System architecture and workflow
+## How JobPilot-AI works
+
+JobPilot-AI follows a simple **discover → understand → decide → act → follow up** workflow. You can monitor each stage from the dashboard and keep manual control whenever a job needs review.
 
 ```mermaid
-graph TD
-    subgraph Desktop_GUI ["CustomTkinter Desktop Interface"]
-        UI_Dash["Control Dashboard"]
-        UI_Profile["Profile and ATS QA Vault"]
-        UI_Settings["AI and Safety Settings"]
-    end
+flowchart LR
+    Profile["1. Your profile<br/>Resume + preferences"]
+    Discover["2. Discover jobs<br/>Indeed · Naukri · LinkedIn"]
+    Evaluate["3. Understand fit<br/>Resume parsing + AI score"]
+    Decide{"4. Review decision<br/>Is it a good match?"}
+    Safe["5. Apply safely<br/>Limits + human-like delays"]
+    Review["Manual review<br/>Doubt queue"]
+    Follow["6. Follow up<br/>History + contacts + outreach"]
 
-    subgraph Crawler_Engine ["Multi-Source Crawler and Scraper"]
-        JobSpy["Fast Scraper (JobSpy / Guest API)"]
-        Playwright["Playwright Browser (Indeed, Naukri, LinkedIn)"]
-    end
+    Profile --> Discover --> Evaluate --> Decide
+    Decide -->|High match| Safe
+    Decide -->|Needs your input| Review
+    Review -->|Approve| Safe
+    Safe --> Follow
+    Evaluate -.-> Resume["Tailored resume PDF"]
+    Resume -.-> Follow
 
-    subgraph AI_Engine ["Dual AI Evaluation Engine"]
-        LocalOllama["Offline Ollama (Qwen 2.5: 7b / 3b / 1.5b)"]
-        CloudAPI["Cloud REST API (Groq, DeepSeek, OpenAI, Gemini)"]
-        RAG["PDF Resume Parser and Match Scoring"]
-    end
-
-    subgraph Workflow_Decision ["Decision and Safety Pipeline"]
-        Filter["Score Check (Min Match Threshold)"]
-        Safety["Account Safety Rate Limiter and Human Delay"]
-    end
-
-    subgraph Execution_Layer ["Execution and Outreach Layer"]
-        AutoApply["Auto-Apply and ATS Form Filler"]
-        DoubtQueue["Doubt Queue (Human Approval)"]
-        Contacts["Recruiter Extractor (Emails / Phones)"]
-        Outreach["WhatsApp Chat and Direct SMTP Email"]
-        PDFGen["AI Tailored Resume PDF Generator"]
-    end
-
-    UI_Profile --> RAG
-    UI_Settings --> Crawler_Engine
-    Crawler_Engine --> RAG
-    RAG --> LocalOllama
-    RAG --> CloudAPI
-    LocalOllama --> Filter
-    CloudAPI --> Filter
-
-    Filter -->|"High Match Score (70%+)"| Safety
-    Filter -->|"Borderline Doubt"| DoubtQueue
-    
-    Safety --> AutoApply
-    Crawler_Engine --> Contacts
-    Contacts --> Outreach
-    RAG --> PDFGen
-
-    DoubtQueue -->|"User Approves"| AutoApply
+    classDef setup fill:#20204a,stroke:#818cf8,color:#f1f5f9
+    classDef process fill:#111827,stroke:#22d3ee,color:#f1f5f9
+    classDef decision fill:#312e81,stroke:#a5b4fc,color:#ffffff
+    class Profile setup
+    class Discover,Evaluate,Safe,Review,Follow,Resume process
+    class Decide decision
 ```
 
-### 🔄 End-to-End Execution Flow
+### What happens at each stage
+
+| Stage | What the app does | What you control |
+|---|---|---|
+| **Profile** | Loads your resume, skills, locations, and ATS answers. | Your personal information and preferences |
+| **Discover** | Searches configured job platforms using JobSpy and Playwright. | Target roles, locations, and platforms |
+| **Evaluate** | Compares job descriptions with your resume and candidate profile using local or cloud AI. | Minimum match score and AI provider |
+| **Review** | Routes borderline or unusual jobs to the Doubt Queue. | Approve, reject, or skip each job |
+| **Apply safely** | Fills supported application forms while respecting daily caps and delays. | Safety limits and pause/stop controls |
+| **Follow up** | Records activity, extracts recruiter contacts, and creates tailored resumes. | Outreach messages and next actions |
+
+### The dashboard at a glance
 
 ```text
-┌────────────────────────┐      ┌────────────────────────┐      ┌────────────────────────┐
-│  1. SEARCH & CRAWL     │  ──► │  2. AI EVALUATION      │  ──► │  3. SAFETY & FILTER    │
-│  Crawls Indeed, Naukri │      │  Parses PDF resume &   │      │  Enforces daily cap    │
-│  & LinkedIn via        │      │  scores match via      │      │  & human typing delay  │
-│  Playwright/JobSpy     │      │  Ollama / Cloud LLM    │      │  (15s - 45s)           │
-└────────────────────────┘      └────────────────────────┘      └────────────────────────┘
-            │                                                               │
-            ▼                                                               ▼
-┌────────────────────────┐                                      ┌────────────────────────┐
-│  5. RECRUITER OUTREACH │      ◄────────────────────────────── │  4. ACTION & APPLY     │
-│  Extracts HR emails &  │      Generates Tailored Resume PDF   │  Auto-fills ATS forms  │
-│  phones for 1-click    │      & routing for direct outreach   │  or queues in Doubt    │
-│  WhatsApp & SMTP Email │                                      │  Approvals tab         │
-└────────────────────────┘                                      └────────────────────────┘
+┌──────────────────┐   ┌──────────────────┐   ┌──────────────────┐
+│  DISCOVER        │ → │  EVALUATE        │ → │  REVIEW          │
+│  Find relevant   │   │  Score against   │   │  Approve only    │
+│  opportunities   │   │  your profile    │   │  when confident  │
+└──────────────────┘   └──────────────────┘   └──────────────────┘
+          │                      │                      │
+          ▼                      ▼                      ▼
+   Search settings         AI explanation          Doubt Queue
+
+┌──────────────────┐   ┌──────────────────┐
+│  APPLY           │ → │  FOLLOW UP       │
+│  Safe automation │   │  History, PDF,   │
+│  with controls   │   │  contacts, email │
+└──────────────────┘   └──────────────────┘
 ```
+
+> **You stay in control:** the bot can be paused or stopped from the dashboard, and uncertain applications wait for approval instead of being submitted automatically.
 
 ## System requirements
 
