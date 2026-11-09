@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import messagebox
 from core.config_manager import CONFIG, CONFIG_PATH
 from core.db_manager import log_message, recalculate_metrics
-from ui.components import C, F, TagChipContainer, add_grid_input, create_action_btn, add_section_divider
+from ui.ui_components import C, F, TagChipContainer, add_grid_input, create_action_btn, add_section_divider
 
 class ProfileView(ctk.CTkFrame):
     def __init__(self, parent, controller):

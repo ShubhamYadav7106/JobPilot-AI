@@ -5,7 +5,7 @@ import base64
 from core.config_manager import CONFIG, get_model_name, get_ai_provider, get_cloud_ai_config
 from core.db_manager import log_message
 
-MAX_RETRIES = 2
+MAX_RETRIES = 0
 
 def check_live_ai_status():
     """
@@ -44,9 +44,15 @@ def query_local_qwen(prompt):
     url = "http://127.0.0.1:11434/api/generate"
     model = get_model_name()
     data = {
-        "model": model,
-        "prompt": prompt,
-        "stream": False
+    "model": model,
+    "prompt": prompt,
+    "stream": False,
+    "think": False,
+    "format": "json",
+    "options": {
+        "temperature": 0,
+        "num_predict": 150
+    }
     }
     req_data = json.dumps(data).encode('utf-8')
     
@@ -154,22 +160,68 @@ def query_ai_model(prompt):
         return query_local_qwen(prompt)
 
 def _extract_json_from_text(text):
-    """Extract the first valid JSON object from text using brace-depth counting."""
-    start = text.find('{')
+    """Extract and validate the first JSON object from model output."""
+    if not text:
+        return None
+
+    text = text.strip()
+
+    # First: try parsing the complete response
+    try:
+        obj = json.loads(text)
+
+        if isinstance(obj, dict):
+            required = {
+                "score",
+                "is_match",
+                "reason",
+                "should_approve"
+            }
+
+            if required.issubset(obj.keys()):
+                return obj
+
+    except json.JSONDecodeError:
+        pass
+
+    # Second: find JSON object inside extra text
+    start = text.find("{")
+
     if start == -1:
         return None
+
     depth = 0
+
     for i, ch in enumerate(text[start:], start):
-        if ch == '{':
+        if ch == "{":
             depth += 1
-        elif ch == '}':
+
+        elif ch == "}":
             depth -= 1
+
             if depth == 0:
+                candidate = text[start:i + 1]
+
                 try:
-                    return json.loads(text[start:i+1])
+                    obj = json.loads(candidate)
+
+                    if isinstance(obj, dict):
+                        required = {
+                            "score",
+                            "is_match",
+                            "reason",
+                            "should_approve"
+                        }
+
+                        if required.issubset(obj.keys()):
+                            return obj
+
                 except json.JSONDecodeError:
                     return None
-    return None
+
+                break
+
+            return None
 
 def evaluate_job_with_qwen(job_title, job_description):
     """
@@ -189,26 +241,30 @@ def evaluate_job_with_qwen(job_title, job_description):
     skip_str = ", ".join([str(k) for k in skip_kw])
 
     prompt = f"""
-You are an expert HR recruiter and AI job matching system.
+Evaluate this job for the candidate.
 
-Evaluate if this job listing matches the candidate's target profile:
 Job Title: {job_title}
-Job Description Snippet:
-{job_description[:2000]}
+Job Description: {job_description[:1500]}
 
 Candidate Skills: {skills_str}
-Candidate Target Roles: {queries_str}
-Skip Keywords (Reject if present): {skip_str}
+Target Roles: {queries_str}
+Reject Keywords: {skip_str}
+Minimum Score: {min_score_val}
 
-Instructions:
-1. Return a JSON object with keys:
-   - "score": Integer score from 0 to 100 representing job match fit.
-   - "is_match": True if score >= {min_score_val}, else False.
-   - "reason": Brief 1-2 sentence explanation of why this job matches or fails.
-   - "should_approve": True if job title is borderline, non-standard, or salary is unusually high/low requiring human approval.
+Return ONLY valid JSON:
+    {{
+        "score": 0,
+        "is_match": false,
+        "reason": "brief reason",
+        "should_approve": false
+    }}
 
-Respond ONLY with valid JSON.
-"""
+    Rules:
+        - score must be integer 0-100
+        - is_match = true only if score >= {min_score_val}
+        - reject if reject keywords are present
+        - reason must be one short sentence
+    """
     reply = query_ai_model(prompt)
     
     try:

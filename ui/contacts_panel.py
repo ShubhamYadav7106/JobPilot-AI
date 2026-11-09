@@ -11,7 +11,7 @@ from core.db_manager import load_recruiter_contacts, log_message
 from core.resume_parser import extract_resume_text
 from core.email_smtp import send_smtp_email
 from automation.llm_evaluator import query_local_qwen
-from ui.components import C, F, create_action_btn
+from ui.ui_components import C, F, create_action_btn
 
 class ContactsView(ctk.CTkFrame):
     def __init__(self, parent, controller):

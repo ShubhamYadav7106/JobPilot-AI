@@ -9,15 +9,15 @@ import core.state as state
 from core.config_manager import CONFIG, CONFIG_PATH, get_model_name, get_active_model_display
 from core.db_manager import APPLIED_DB_PATH, recalculate_metrics
 from automation.llm_evaluator import check_live_ai_status
-from ui.components import C, F, configure_treeview_style
-from ui.dashboard_view import DashboardView
-from ui.history_view import HistoryView
-from ui.suggestions_view import SuggestionsView
-from ui.approvals_view import ApprovalsView
-from ui.settings_view import SettingsView
-from ui.profile_view import ProfileView
-from ui.accounts_view import AccountsView
-from ui.contacts_view import ContactsView
+from ui.ui_components import C, F, configure_treeview_style
+from ui.dashboard_panel import DashboardView
+from ui.history_panel import HistoryView
+from ui.suggestions_panel import SuggestionsView
+from ui.approvals_panel import ApprovalsView
+from ui.settings_panel import SettingsView
+from ui.profile_panel import ProfileView
+from ui.accounts_panel import AccountsView
+from ui.contacts_panel import ContactsView
 
 class AppWindow(ctk.CTk):
     def __init__(self):

@@ -18,6 +18,7 @@ tailored_resumes/
 *.jpeg
 
 # Environments
+venv/
 .venv/
 env/
 ENV/

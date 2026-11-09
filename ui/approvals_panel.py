@@ -4,20 +4,20 @@ from tkinter import ttk, messagebox, scrolledtext
 import core.state as state
 from core.db_manager import save_to_db, recalculate_metrics, update_job_status_in_csv
 from automation.bot_runner import apply_single_job_async
-from ui.components import C, F, create_action_btn
+from ui.ui_components import C, F, create_action_btn
 
 class ApprovalsView(ctk.CTkFrame):
     def __init__(self, parent, controller):
         super().__init__(parent, fg_color="transparent")
         self.controller = controller
         
-        # ── Header ──
+        # â”€â”€ Header â”€â”€
         title_row = ctk.CTkFrame(self, fg_color="transparent")
         title_row.pack(fill='x', pady=(0, 14))
         lbl_title = ctk.CTkLabel(title_row, text="Doubt Queue Approvals", font=F["h1"], text_color=C["text"])
         lbl_title.pack(side='left')
         
-        # ── Split Layout ──
+        # â”€â”€ Split Layout â”€â”€
         card_split = ctk.CTkFrame(self, fg_color="transparent")
         card_split.pack(fill='both', expand=True)
         card_split.columnconfigure(0, weight=1)
@@ -56,10 +56,10 @@ class ApprovalsView(ctk.CTkFrame):
         btn_row = ctk.CTkFrame(right_card, fg_color="transparent")
         btn_row.pack(fill='x', padx=14, pady=(0, 14))
         
-        btn_appr = create_action_btn(btn_row, "✓  Approve & Apply", self.approve_and_apply_job, "success", "normal")
+        btn_appr = create_action_btn(btn_row, "âœ“  Approve & Apply", self.approve_and_apply_job, "success", "normal")
         btn_appr.pack(side='left', padx=(0, 8))
         
-        btn_rej = create_action_btn(btn_row, "✕  Reject & Skip", self.reject_and_skip_job, "danger", "normal")
+        btn_rej = create_action_btn(btn_row, "âœ•  Reject & Skip", self.reject_and_skip_job, "danger", "normal")
         btn_rej.pack(side='left')
         
         self.load_approvals_table()

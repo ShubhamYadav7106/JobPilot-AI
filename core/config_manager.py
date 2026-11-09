@@ -61,7 +61,7 @@ DEFAULT_CONFIG = {
         "location_scope": "Entire Country",
         "preferred_locations": ["Mumbai, Maharashtra, India", "Bangalore, Karnataka, India"],
         "target_platforms": ["Indeed", "Naukri", "LinkedIn"],
-        "ollama_model": "qwen2.5:7b",
+        "ollama_model": "qwen3:4b",
         "ai_provider": "local",
         "cloud_ai_preset": "OpenAI",
         "cloud_ai_base_url": "https://api.openai.com/v1",
@@ -127,7 +127,7 @@ def save_config():
 
 def get_model_name():
     """Get the configured Ollama model name, with fallback."""
-    return CONFIG.get("settings", {}).get("ollama_model", "qwen2.5:7b")
+    return CONFIG.get("settings", {}).get("ollama_model", "qwen3:4b")
 
 def get_location_search_term(chip_text):
     parts = [p.strip() for p in chip_text.split(",") if p.strip()]

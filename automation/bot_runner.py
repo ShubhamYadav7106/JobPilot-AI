@@ -401,9 +401,9 @@ async def run_bot_async():
     
     async with async_playwright() as p:
         try:
-            user_data_dir = os.path.join(os.path.expanduser("~"), "edge-debug-profile")
-            log_message("Launching Edge Browser...")
-            edge_exe = get_edge_executable_path()
+            user_data_dir = os.path.join(os.path.expanduser("~"), "chrome-debug-profile")
+            log_message("Launching Chrome Browser...")
+            edge_exe = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
             launch_kwargs = {
                 "user_data_dir": user_data_dir,
                 "headless": False,
@@ -897,7 +897,7 @@ def apply_single_job_async(job):
             async with async_playwright() as p:
                 browser = None
                 try:
-                    user_data_dir = os.path.join(os.path.expanduser("~"), "edge-debug-profile")
+                    user_data_dir = os.path.join(os.path.expanduser("~"), "chrome-debug-profile")
                     browser = await p.chromium.launch_persistent_context(
                         user_data_dir,
                         executable_path=get_edge_executable_path(),
@@ -909,7 +909,10 @@ def apply_single_job_async(job):
                     log_message(f"Error in persistent single job apply: {e}")
                 finally:
                     if browser:
-                        await browser.close()
+                        try:
+                            await browser.close()
+                        except Exception:
+                            pass
                 
         loop.run_until_complete(standalone_playwright_task())
         loop.close()

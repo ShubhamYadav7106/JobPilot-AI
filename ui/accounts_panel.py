@@ -5,22 +5,22 @@ from tkinter import messagebox
 from core.config_manager import CONFIG, CONFIG_PATH
 from core.db_manager import log_message, recalculate_metrics
 from core.credential_store import get_credential, store_credential
-from ui.components import C, F, add_grid_input, create_action_btn, add_section_divider
+from ui.ui_components import C, F, add_grid_input, create_action_btn, add_section_divider
 
 class AccountsView(ctk.CTkFrame):
     def __init__(self, parent, controller):
         super().__init__(parent, fg_color="transparent")
         self.controller = controller
         
-        # ── Header ──
+        # â”€â”€ Header â”€â”€
         lbl_title = ctk.CTkLabel(self, text="Credentials & SMTP", font=F["h1"], text_color=C["text"], anchor="w")
         lbl_title.pack(anchor='w', pady=(0, 14))
         
-        # ── Scrollable Card ──
+        # â”€â”€ Scrollable Card â”€â”€
         card = ctk.CTkScrollableFrame(self, fg_color=C["card"], corner_radius=12)
         card.pack(fill='both', expand=True)
         
-        # ── Job Board Logins ──
+        # â”€â”€ Job Board Logins â”€â”€
         add_section_divider(card, "Job Board Session Logins")
         
         grid_frame = ctk.CTkFrame(card, fg_color="transparent")
@@ -39,7 +39,7 @@ class AccountsView(ctk.CTkFrame):
         self.linkedin_pass = add_grid_input(grid_frame, "LinkedIn Password", 2, 1)
         self.linkedin_pass.configure(show="*")
         
-        # ── SMTP Mail Server ──
+        # â”€â”€ SMTP Mail Server â”€â”€
         add_section_divider(card, "SMTP Outreach Mail Server")
         
         smtp_frame = ctk.CTkFrame(card, fg_color="transparent")
@@ -65,7 +65,7 @@ class AccountsView(ctk.CTkFrame):
         self.smtp_email.insert(0, CONFIG.get("smtp", {}).get("email", ""))
         self.smtp_password.insert(0, get_credential("smtp.password"))
         
-        # ── Save Button ──
+        # â”€â”€ Save Button â”€â”€
         btn_frame = ctk.CTkFrame(card, fg_color="transparent")
         btn_frame.pack(anchor='w', padx=16, pady=(20, 16))
         btn_save = create_action_btn(btn_frame, "Save Credentials", self.save_accounts_action, "primary", "large")

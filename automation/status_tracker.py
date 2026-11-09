@@ -37,8 +37,8 @@ async def run_application_status_tracker():
         async with async_playwright() as p:
             browser = None
             try:
-                user_data_dir = os.path.join(os.path.expanduser("~"), "edge-debug-profile")
-                edge_exe = get_edge_executable_path()
+                user_data_dir = os.path.join(os.path.expanduser("~"), "chrome-debug-profile")
+                edge_exe = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
                 launch_kwargs = {
                     "user_data_dir": user_data_dir,
                     "headless": False
@@ -85,13 +85,16 @@ async def run_application_status_tracker():
                             continue
                 except Exception as e:
                     log_message(f"TRACKER: Indeed portal scan notice: {e}")
-                
+
                 log_message("TRACKER: Tracking update complete! Database is synced.")
             except Exception as e:
                 log_message(f"TRACKER ERROR: Status tracker failed: {e}")
             finally:
                 if browser:
-                    await browser.close()
+                    try:
+                        await browser.close()
+                    except Exception:
+                        pass
     finally:
         with TRACKER_LOCK:
             TRACKER_RUNNING = False

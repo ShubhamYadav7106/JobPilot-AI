@@ -5,7 +5,7 @@ from tkinter import messagebox
 from core.config_manager import CONFIG, CONFIG_PATH, LOCATION_DATA, get_installed_ollama_models
 from core.db_manager import log_message, recalculate_metrics
 from core.credential_store import get_credential, store_credential
-from ui.components import C, F, TagChipContainer, add_form_input, create_action_btn, add_section_divider
+from ui.ui_components import C, F, TagChipContainer, add_form_input, create_action_btn, add_section_divider
 
 class SettingsView(ctk.CTkFrame):
     def __init__(self, parent, controller):

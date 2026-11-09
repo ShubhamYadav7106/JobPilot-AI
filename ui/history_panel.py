@@ -7,7 +7,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from core.db_manager import APPLIED_DB_PATH, log_message
 from automation.status_tracker import start_tracker_thread
-from ui.components import C, F, create_action_btn
+from ui.ui_components import C, F, create_action_btn
 
 class HistoryView(ctk.CTkFrame):
     def __init__(self, parent, controller):

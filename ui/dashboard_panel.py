@@ -13,7 +13,7 @@ from core.resume_parser import extract_resume_text
 from automation.llm_evaluator import query_ai_model
 from automation.job_scraper import fast_scrape_jobs
 from automation.bot_runner import start_bot_thread, stop_bot
-from ui.components import C, F, create_action_btn
+from ui.ui_components import C, F, create_action_btn
 
 class DashboardView(ctk.CTkFrame):
     def __init__(self, parent, controller):
@@ -166,7 +166,7 @@ class DashboardView(ctk.CTkFrame):
             search_query = ""
             
         self.logs_box.delete('1.0', 'end')
-        for log in state.LOG_QUEUE:
+        for log in list(state.LOG_QUEUE):
             if not search_query or search_query in log.lower():
                 self.logs_box.insert('end', log + "\n")
         self.logs_box.see('end')
