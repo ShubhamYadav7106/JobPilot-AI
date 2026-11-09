@@ -1,30 +1,54 @@
-# 🚀 JobPilot-AI — Autonomous Job Search & Outreach Assistant
+# JobPilot-AI
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python: 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](#installation)
-[![GUI: CustomTkinter](https://img.shields.io/badge/GUI-CustomTkinter_v6-indigo.svg)](#features)
-[![Local LLM: Ollama](https://img.shields.io/badge/Local_LLM-Ollama_Qwen2.5-purple.svg)](https://ollama.com)
-[![Cloud AI: Universal](https://img.shields.io/badge/Cloud_AI-OpenAI_DeepSeek_Groq_Gemini-green.svg)](#ai-setup-guide)
+### A local-first job search and application workspace
 
-An advanced, stealthy desktop assistant that concurrently crawls major job platforms (**Indeed**, **Naukri**, and **LinkedIn**), evaluates job description match using a **Local LLM (Qwen 2.5 via Ollama)** or **Cloud REST API**, autofills applications, and extracts recruiter contacts for direct **WhatsApp & SMTP cold outreach**!
+[![License: MIT](https://img.shields.io/badge/license-MIT-6366f1.svg)](LICENSE)
+[![Python: 3.10+](https://img.shields.io/badge/python-3.10%2B-0f172a.svg)](#installation)
+
+JobPilot-AI is a desktop assistant for finding, evaluating, tailoring, and tracking job applications from one workspace. It combines browser automation, resume-aware AI evaluation, application safety controls, and recruiter outreach without forcing personal data into the repository.
+
+> **Design principle:** keep the workflow fast and visible. Every search, score, approval, application, and contact is surfaced in the dashboard so you stay in control.
+
+## What makes it different
+
+- **Local-first AI:** use Ollama privately, or switch to a supported cloud endpoint on lower-spec machines.
+- **Resume-aware decisions:** match job descriptions against the candidate profile and parsed PDF resume before applying.
+- **Human-in-the-loop safety:** borderline opportunities go to an approval queue instead of being submitted blindly.
+- **One workspace:** search, tailored resumes, recruiter contacts, outreach, credentials, and application history share the same GUI.
+- **Portable setup:** personal configuration, credentials, databases, logs, and generated files are ignored by Git.
+
+## Technology stack
+
+| Area | Tools |
+|---|---|
+| Desktop UI | Python, CustomTkinter, Tkinter |
+| Browser automation | Playwright |
+| Job discovery | JobSpy and platform browser flows |
+| AI evaluation | Ollama plus OpenAI-compatible REST APIs |
+| Resume processing | pypdf and ReportLab |
+| Local persistence | JSON configuration, CSV records, and OS keyring |
+
+## Project status
+
+JobPilot-AI is designed for local experimentation and personal workflows. Review each application in the dashboard, respect platform terms, and verify generated messages before contacting recruiters.
 
 ---
 
-## 🌟 Key Features
+## Key features
 
 - **🎨 Modern CustomTkinter Desktop GUI**: Sleek dark glassmorphism interface with rounded controls, real-time log streaming, and metric analytics.
 - **🤖 Dual AI Engine (Local + Cloud)**:
   - **Local Ollama Mode**: 100% Private, zero cloud costs using `qwen2.5:7b`, `3b`, or `1.5b`.
   - **Cloud REST API Mode**: Zero system load for low-spec PCs using OpenAI, DeepSeek, Groq, Google Gemini, or Custom Endpoints.
 - **📇 Recruiter Contact Extractor & Direct Outreach**: Automatically detects HR emails, phone numbers, and recruiter names. Provides 1-click **WhatsApp Direct Chat (`wa.me`)** and **SMTP Direct Email Outreach**.
-- **📄 AI Resume Tailorer & PDF Generator**: Automatically rewrites professional summaries and achievement bullets tailored for target job descriptions, exporting formatted PDF resumes on demand.
+- **📄 AI Resume Tailoring & PDF Generator**: Automatically rewrites professional summaries and achievement bullets for target job descriptions, exporting formatted PDF resumes on demand.
 - **📑 Candidate QA Vault (Smart ATS Memory)**: Stores experience years, notice period, salary expectations, work authorization, and relocation preferences for intelligent form auto-filling.
 - **🛡️ Account Safety & Anti-Bot Protection**: Configurable daily application caps and randomized human typing/browsing delays (15s–45s) to protect your job board accounts.
 - **⚑ Doubt Queue Approvals**: Holds borderline or high-salary jobs in a manual review queue where you can review AI explanations before applying.
 
 ---
 
-## 📊 System Architecture & Workflow Pipeline
+## System architecture and workflow
 
 ```mermaid
 graph TD
@@ -96,7 +120,7 @@ graph TD
 └────────────────────────┘                                      └────────────────────────┘
 ```
 
-## 💻 System Requirements
+## System requirements
 
 | System Spec | Recommended AI Setup | System Load |
 |---|---|---|
@@ -106,7 +130,7 @@ graph TD
 
 ---
 
-## ⚙️ Installation Guide (Cross-Platform)
+## Installation
 
 ### 🪟 Windows (10/11)
 
@@ -186,7 +210,7 @@ playwright install chromium
 
 ---
 
-## 🧠 AI Setup Guide (Local vs Cloud)
+## AI setup: local or cloud
 
 ### Option A: Local AI Setup (Ollama — 100% Private)
 
@@ -247,7 +271,7 @@ If your computer has low specs (e.g. 4GB RAM), use Cloud API mode for **instant 
 
 ---
 
-## 🚀 Post-Installation Setup & First-Time Walkthrough
+## First-time setup and usage
 
 After installing dependencies and setting up your AI engine (Ollama or Cloud API), follow these steps to set up and run JobPilot-AI:
 
@@ -312,7 +336,7 @@ After installing dependencies and setting up your AI engine (Ollama or Cloud API
 
 ---
 
-## 📂 Project Structure
+## Project structure
 
 ```
 JobPilot-AI/

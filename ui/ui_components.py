@@ -3,8 +3,8 @@ from tkinter import ttk
 import tkinter as tk
 
 # ═══════════════════════════════════════════════════════════════
-#  DESIGN SYSTEM v3.0 — Hybrid Premium Theme
-#  CustomTkinter • Glassmorphism Depth • Minimal Layout • Soft Tactile
+#  DESIGN SYSTEM v3.1 — Midnight Indigo Theme
+#  CustomTkinter • Clear hierarchy • Soft contrast • Tactile controls
 # ═══════════════════════════════════════════════════════════════
 
 ctk.set_appearance_mode("dark")
@@ -15,10 +15,12 @@ C = {
     "bg":          "#0a0e1a",
     "sidebar":     "#080c16",
     "card":        "#111827",
+    "card_alt":    "#151e2f",
     "card_hover":  "#1a2340",
     "input":       "#0c1220",
     "border":      "#1e293b",
     "focus":       "#6366f1",
+    "accent_soft": "#20204a",
 
     "accent":      "#6366f1",
     "accent_h":    "#818cf8",
@@ -43,7 +45,7 @@ C = {
 
 # ── Typography ──
 F = {
-    "h1":      ("Segoe UI", 18, "bold"),
+    "h1":      ("Segoe UI", 20, "bold"),
     "h2":      ("Segoe UI", 14, "bold"),
     "h3":      ("Segoe UI", 12, "bold"),
     "body":    ("Segoe UI", 11),
@@ -107,14 +109,15 @@ def create_action_btn(parent, text, command, color="primary", size="normal"):
         "outline":  ("transparent", C["card_hover"], C["accent"]),
     }
     fg, hover, tc = color_map.get(color, color_map["primary"])
-    dim = {"small": (28, 10), "normal": (34, 12), "large": (38, 14)}
+    dim = {"small": (30, 10), "normal": (38, 12), "large": (42, 14)}
     h, cr = dim.get(size, dim["normal"])
     font = F["xs_b"] if size == "small" else F["sm_b"]
     border = 1 if color == "outline" else 0
     return ctk.CTkButton(parent, text=text, command=command,
         fg_color=fg, hover_color=hover, text_color=tc,
         font=font, corner_radius=cr, height=h,
-        border_width=border, border_color=C["accent"] if border else None)
+        border_width=border, border_color=C["accent"] if border else None,
+        cursor="hand2")
 
 # ═══════════════════════════════════════════════════════════════
 #  Form Input Helpers
@@ -123,7 +126,8 @@ def add_form_input(parent, label):
     lbl = ctk.CTkLabel(parent, text=label, font=F["sm_b"], text_color=C["muted"], anchor="w")
     lbl.pack(anchor='w', padx=16, pady=(12, 4))
     entry = ctk.CTkEntry(parent, fg_color=C["input"], border_color=C["border"],
-        text_color=C["text"], font=F["sm"], corner_radius=8, height=38)
+        text_color=C["text"], font=F["sm"], corner_radius=9, height=40,
+        border_width=1)
     entry.pack(fill='x', padx=16)
     return entry
 
@@ -133,7 +137,8 @@ def add_grid_input(parent, label, row, col):
     lbl = ctk.CTkLabel(frame, text=label, font=F["sm_b"], text_color=C["muted"], anchor="w")
     lbl.pack(anchor='w', pady=(0, 4))
     entry = ctk.CTkEntry(frame, fg_color=C["input"], border_color=C["border"],
-        text_color=C["text"], font=F["sm"], corner_radius=8, height=38)
+        text_color=C["text"], font=F["sm"], corner_radius=9, height=40,
+        border_width=1)
     entry.pack(fill='x')
     return entry
 
@@ -167,7 +172,7 @@ class TagChipContainer(ctk.CTkFrame):
 
         self.entry = ctk.CTkEntry(self, placeholder_text="Type and press Enter...",
             fg_color=C["input"], border_color=C["border"], text_color=C["text"],
-            font=F["sm"], corner_radius=8, height=36)
+            font=F["sm"], corner_radius=9, height=38, border_width=1)
         self.entry.pack(fill='x', padx=16, pady=(4, 6))
 
         self.entry.bind("<Return>", self.add_item_event)

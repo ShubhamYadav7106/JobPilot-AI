@@ -23,23 +23,23 @@ class AppWindow(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("JobPilot-AI — Autonomous Job Search & Outreach Assistant")
-        self.geometry("1220x800")
-        self.minsize(1050, 680)
+        self.geometry("1280x840")
+        self.minsize(1100, 700)
         self.configure(fg_color=C["bg"])
         
         self.current_view = "dashboard"
         configure_treeview_style()
         
         # ── Sidebar ──
-        self.sidebar = ctk.CTkFrame(self, fg_color=C["sidebar"], corner_radius=0, width=240)
+        self.sidebar = ctk.CTkFrame(self, fg_color=C["sidebar"], corner_radius=0, width=252)
         self.sidebar.pack(side='left', fill='y')
         self.sidebar.pack_propagate(False)
         
         # Logo
         logo_frame = ctk.CTkFrame(self.sidebar, fg_color="transparent")
-        logo_frame.pack(pady=(24, 12), padx=20, anchor='w', fill='x')
+        logo_frame.pack(pady=(28, 12), padx=22, anchor='w', fill='x')
         
-        logo_icon = ctk.CTkLabel(logo_frame, text="◆", font=("Segoe UI", 20, "bold"), text_color=C["accent"])
+        logo_icon = ctk.CTkLabel(logo_frame, text="◆", font=("Segoe UI", 20, "bold"), text_color=C["cyan"])
         logo_icon.pack(side='left')
         logo_text = ctk.CTkLabel(logo_frame, text=" JobPilot-AI", font=F["logo"], text_color=C["text"])
         logo_text.pack(side='left')
@@ -68,7 +68,7 @@ class AppWindow(ctk.CTk):
                 anchor="w",
                 font=F["nav"],
                 fg_color="transparent",
-                hover_color=C["card_hover"],
+                hover_color=C["accent_soft"],
                 text_color=C["muted"],
                 corner_radius=10,
                 height=42,
@@ -123,8 +123,8 @@ class AppWindow(ctk.CTk):
             self.ind_qwen.configure(text=f"● {status_text}", text_color=ind_color)
 
     def create_top_navbar(self):
-        self.top_bar = ctk.CTkFrame(self.container, fg_color=C["card"], corner_radius=12, height=48)
-        self.top_bar.pack(fill='x', pady=(0, 16))
+        self.top_bar = ctk.CTkFrame(self.container, fg_color=C["card_alt"], corner_radius=14, height=54)
+        self.top_bar.pack(fill='x', pady=(0, 18))
         self.top_bar.pack_propagate(False)
         
         status_f = ctk.CTkFrame(self.top_bar, fg_color="transparent")
@@ -134,18 +134,18 @@ class AppWindow(ctk.CTk):
         ind_color = C["dim"]
         self.ind_qwen = ctk.CTkLabel(status_f, text=f"● {status_str}",
                                      font=F["xs_b"], text_color=ind_color, cursor="hand2")
-        self.ind_qwen.pack(side='left', padx=(0, 16), pady=12)
+        self.ind_qwen.pack(side='left', padx=(0, 20), pady=15)
         self.ind_qwen.bind("<Button-1>", lambda e: self.show_view('settings'))
         
         self._update_ai_status_async()
         
         self.ind_edge = ctk.CTkLabel(status_f, text="● Edge: Connected",
                                     font=F["xs_b"], text_color=C["dim"])
-        self.ind_edge.pack(side='left', padx=(0, 16), pady=12)
+        self.ind_edge.pack(side='left', padx=(0, 20), pady=15)
         
         self.ind_db = ctk.CTkLabel(status_f, text="● DB: Active",
                                   font=F["xs_b"], text_color=C["blue"])
-        self.ind_db.pack(side='left', pady=12)
+        self.ind_db.pack(side='left', pady=15)
         
     def show_view(self, name):
         self.current_view = name

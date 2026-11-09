@@ -22,9 +22,14 @@ class DashboardView(ctk.CTkFrame):
         
         # ── Header Row ──
         title_row = ctk.CTkFrame(self, fg_color="transparent")
-        title_row.pack(fill='x', pady=(0, 14))
+        title_row.pack(fill='x', pady=(0, 18))
         lbl_title = ctk.CTkLabel(title_row, text="Control Dashboard", font=F["h1"], text_color=C["text"])
         lbl_title.pack(side='left')
+
+        lbl_subtitle = ctk.CTkLabel(
+            title_row, text="Your job search command center",
+            font=F["sm"], text_color=C["dim"])
+        lbl_subtitle.pack(side='left', padx=(12, 0), pady=(5, 0))
         
         btn_frame = ctk.CTkFrame(title_row, fg_color="transparent")
         btn_frame.pack(side='right')
@@ -130,7 +135,8 @@ class DashboardView(ctk.CTkFrame):
         btn_send.pack(side='right')
 
     def create_metric_card(self, parent, label, val, col, accent_color):
-        card = ctk.CTkFrame(parent, fg_color=C["card"], corner_radius=12)
+        card = ctk.CTkFrame(parent, fg_color=C["card"], corner_radius=14,
+                            border_width=1, border_color=C["border"])
         card.grid(row=0, column=col, sticky='nsew', padx=5, pady=2)
         
         accent_bar = ctk.CTkFrame(card, fg_color=accent_color, height=3, corner_radius=0)
